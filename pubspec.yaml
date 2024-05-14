@@ -57,7 +57,7 @@ flutter:
   fonts:
     - family: Inter
       fonts:
-        - asset: fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Regular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
