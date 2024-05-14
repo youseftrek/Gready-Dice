@@ -12,7 +12,10 @@ class GreedyDice extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Rubik'),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/login': (context) => LoginScreen()
+      },
     );
   }
 }
