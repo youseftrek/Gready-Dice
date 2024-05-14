@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -11,9 +13,19 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
+  startTimer() {
+    var duration = Duration(seconds: 4);
+    return Timer(duration, route);
+  }
+
+  route() {
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
   @override
   void initState() {
     super.initState();
+    startTimer();
     _controller = AnimationController(vsync: this);
   }
 
