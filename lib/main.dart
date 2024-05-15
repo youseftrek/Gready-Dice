@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/views/login_screen.dart';
 import 'package:greedy_dice_project/views/splash_screen.dart';
 
+
 void main() {
   runApp(GreedyDice());
 }

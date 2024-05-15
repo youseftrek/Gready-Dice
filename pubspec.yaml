@@ -55,6 +55,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
+    - assets/images/
     - assets/animations/dice_animation.json
 
   fonts:
