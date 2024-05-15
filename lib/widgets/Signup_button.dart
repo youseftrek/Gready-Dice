@@ -6,6 +6,7 @@ class Signup_button extends StatelessWidget {
   final String label;
   const Signup_button({super.key,required this.onTap,required this.label});
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -29,3 +30,4 @@ class Signup_button extends StatelessWidget {
     );
   }
 }
+
