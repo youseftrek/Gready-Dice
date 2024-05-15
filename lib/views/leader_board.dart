@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:greedy_dice_project/models/user_model.dart';
+import 'package:greedy_dice_project/models/LeaderBoardModel.dart';
 
 class LeaderBoard extends StatefulWidget {
   const LeaderBoard({super.key});
