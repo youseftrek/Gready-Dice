@@ -3,8 +3,6 @@ import 'package:greedy_dice_project/models/api_service_model.dart';
 import 'package:greedy_dice_project/widgets/Signup_Textfield.dart';
 import 'package:greedy_dice_project/widgets/Signup_button.dart';
 
-import '../models/user_model.dart';
-
 class SignupPage extends StatelessWidget {
   SignupPage({Key? key});
 
