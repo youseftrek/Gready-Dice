@@ -21,29 +21,45 @@ class APIServiceModel {
   // Convert fromJSON to User Model
   static User JsonToUser(Map<String, dynamic> json) {
     return User(
-        email: json['email'],
-        name: json['name'],
-        score: json['score'],
-        avatarUrl: json['avatarUrl'],
-        id: json['id']);
+        email: json['email'] ?? '', // Provide a default value if email is null
+        name: json['name'] ?? '', // Provide a default value if name is null
+        score: json['score'] ?? 0, // Provide a default value if score is null
+        avatarUrl: json['avatar'] ?? '', // Provide a default value if avatarUrl is null
+        id: json['id'] ?? '',
+    );
   }
 
   // GET Method to Get User by ID
-  static Future<dynamic> getUser(int userId) async {
+  static Future<User> getUser(int userId) async {
     try {
       final response = await _dio.get('/users/$userId');
-      return response.data;
+      return JsonToUser(response.data);
     } catch (error) {
       // Handle error
       rethrow;
     }
   }
 
+  static Future<Map<String, dynamic>> getUserJson(int userId) async {
+    try {
+      final response = await _dio.get('/users/$userId');
+      return response.data;
+
+    } catch (error) {
+      // Handle error
+      rethrow;
+    }
+  }
   // POST Method Create new User
-  static Future<int?> createNewUser(User user) async {
+  static Future<User?> createNewUser(User user) async {
     try {
       final response = await _dio.post('/users', data: UserToJson(user));
-      return response.statusCode;
+      if (response.statusCode == 201){
+        return user;
+      }
+      else {
+        return null;
+      }
     } catch (error) {
       // Handle error
       rethrow;
@@ -52,36 +68,21 @@ class APIServiceModel {
 
   // Get Method to Verify user Login
   static Future<bool> verifyLogin(String email, String password) async {
+    final Response response;
     try {
-      final response = await _dio.get('/users',
-          queryParameters: {'email': email, 'password': password});
+         response = await _dio.get('/users',
+            queryParameters: {'email': email, 'password': password});
+      } on Exception catch (e) {
+          return false;
+      }
       if (response.statusCode == 200) {
         return true;
       } else {
         return false;
       }
-    } catch (error) {
-      // Handle error
-      rethrow;
-    }
-  }
-  // GET Method Return all users list
-  static Future<dynamic> getUsersList() async {
-    try {
-      final response = await _dio.get('/users');
-      if (response.statusCode == 200) {
-        return response.data;
-      } else {
-        throw Exception(
-            'Failed to load users. Status code : ${response.statusCode}');
-      }
-    } catch (error) {
-      // Handle error
-      rethrow;
-    }
   }
   // GET Method to Return all users by score descending
-  static Future<dynamic> getUsersListDescending() async {
+  static Future<List> getUsersListDescending() async {
     try {
       final response = await _dio.get('/users?sortBy=score&order=desc');
       if (response.statusCode == 200) {
@@ -96,9 +97,9 @@ class APIServiceModel {
     }
   }
   // PUT Method to update score
-  static void updateUserScore({required int userId ,required int score}) async {
+  static void updateUserScore({required String userId ,required int score}) async {
     try {
-     await _dio.put('/users/$userId',data: 'score: $score');
+     await _dio.put('/users/$userId',data: {'score': score});
     } catch (error) {
       // Handle error
       rethrow;
@@ -118,11 +119,10 @@ class APIServiceModel {
   // PUT Method to change Player Status
   static void putUserStatus(int userId,bool status) async {
     try {
-      await _dio.put('/users/$userId',data : 'inGame: $status');
+      await _dio.put('/users/$userId',data : {'inGame': status});
     } catch (error) {
       // Handle error
       rethrow;
     }
   }
-
 }
