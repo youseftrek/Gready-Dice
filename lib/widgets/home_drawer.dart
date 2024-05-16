@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:greedy_dice_project/views/leader_board.dart';
 
+import '../models/api_service_model.dart';
 import 'home_button.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -45,7 +47,13 @@ class HomeDrawer extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 80),
-            child: HomeButton(text: "Score Board", onTap: () {}),
+            child: HomeButton(text: "Score Board", onTap: () async {
+              List users = await APIServiceModel.getUsersListDescending();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LeaderBoard()),
+              );
+            }),
           ),
           Spacer(flex: 1),
           ListTile(
