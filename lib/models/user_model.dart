@@ -4,11 +4,12 @@ class User {
   final int score;
   final String avatarUrl;
   final String id;
+  final String password;
   User(
       {required this.email,
       required this.name,
       required this.score,
-      required this.avatarUrl,
-      this.id = ''
-      });
+      this.avatarUrl = '',
+      this.id = '',
+      this.password = 'test'});
 }
