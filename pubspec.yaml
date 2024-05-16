@@ -61,6 +61,7 @@ flutter:
   fonts:
     - family: Inter
       fonts:
+        - asset: assets/fonts/Caveat-Regular.ttf
         - asset: assets/fonts/Inter-Regular.ttf
 
   # The following line ensures that the Material Icons font is
