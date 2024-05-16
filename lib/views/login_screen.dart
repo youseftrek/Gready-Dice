@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/models/api_service_model.dart';
 import 'package:greedy_dice_project/views/Signup_Page.dart';
+import 'package:greedy_dice_project/views/home_page.dart';
 import 'package:greedy_dice_project/widgets/Signup_Textfield.dart';
 import 'package:greedy_dice_project/widgets/Signup_button.dart';
 
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen>
     if (login){
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SignupPage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     }
     else {
