@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:greedy_dice_project/models/LeaderBoardModel.dart';
+import 'package:greedy_dice_project/models/api_service_model.dart';
 
 class LeaderBoard extends StatefulWidget {
   const LeaderBoard({super.key});
@@ -9,10 +9,27 @@ class LeaderBoard extends StatefulWidget {
 }
 
 class _LeaderBoard extends State<LeaderBoard> {
+  List users = [];
+
+  //GET ALL USERS FORM THE API
+  void getUsers() async {
+    users = await APIServiceModel.getUsersListDescending();
+    print(users);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUsers();
+  }
+
+  void handleTap(int index){
+    print(users[index]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff222831),
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -34,6 +51,7 @@ class _LeaderBoard extends State<LeaderBoard> {
           },
         ),
       ),
+      backgroundColor: Color(0xff222831),
       body: Stack(
         children: [
           Stack(
@@ -63,79 +81,85 @@ class _LeaderBoard extends State<LeaderBoard> {
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
-                  itemCount: userItems.length,
+                  itemCount: users.length,
                   itemBuilder: (context, index) {
-                    final items = userItems[index];
-                    return Padding(
-                      padding: EdgeInsets.only(right: 15, left: 15, top: 15),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xff222831),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        height: 50,
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: AssetImage(items.image),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          items.name,
-                                          style: const TextStyle(
-                                              color: Color(0xff00ADB5),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          "#${items.rank}",
-                                          style: const TextStyle(
-                                              color: Color(0xffdddddd),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 175,
-                                      child: Row(
+                    final items = users;
+                    return GestureDetector(
+                      onTap: () => handleTap(index)),
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 15, left: 15, top: 15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xff222831),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          height: 50,
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundImage:
+                                    NetworkImage(items[index]['avatar']),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            (items.point).toString() + " ⭐",
-                                            style: TextStyle(
+                                            items[index]['name'],
+                                            style: const TextStyle(
+                                                color: Color(0xff00ADB5),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            "#${index + 1}",
+                                            style: const TextStyle(
                                                 color: Color(0xffdddddd),
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                                      SizedBox(
+                                        width: 175,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              (items[index]['score'])
+                                                      .toString() +
+                                                  " ⭐",
+                                              style: TextStyle(
+                                                  color: Color(0xffdddddd),
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
                   }),
             ),
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
@@ -144,14 +168,14 @@ class _LeaderBoard extends State<LeaderBoard> {
                     height: 5,
                   ),
                   Text(
-                    "John Doe",
+                    '${users[0]['name']}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xff00ADB5),
                         fontSize: 16),
                   ),
                   Text(
-                    "124 ⭐",
+                    '${users[0]['score']} ⭐',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xffdddddd),
@@ -159,13 +183,13 @@ class _LeaderBoard extends State<LeaderBoard> {
                   ),
                   CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage("assets/images/a.png"),
+                    backgroundImage: NetworkImage(users[0]['avatar']),
                   ),
                 ],
               ),
             ],
           ),
-          const Positioned(
+          Positioned(
             top: 40,
             left: 40,
             child: Row(
@@ -177,14 +201,14 @@ class _LeaderBoard extends State<LeaderBoard> {
                       height: 5,
                     ),
                     Text(
-                      "Jack Max",
+                      '${users[1]['name']}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0xff00ADB5),
                           fontSize: 16),
                     ),
                     Text(
-                      "112 ⭐",
+                      '${users[1]['score']} ⭐',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0xffdddddd),
@@ -192,14 +216,14 @@ class _LeaderBoard extends State<LeaderBoard> {
                     ),
                     CircleAvatar(
                       radius: 35,
-                      backgroundImage: AssetImage("assets/images/b.png"),
+                      backgroundImage: NetworkImage(users[1]['avatar']),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 40,
             right: 40,
             child: Row(
@@ -211,14 +235,14 @@ class _LeaderBoard extends State<LeaderBoard> {
                       height: 5,
                     ),
                     Text(
-                      "Joe",
+                      '${users[2]['name']}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0xff00ADB5),
                           fontSize: 16),
                     ),
                     Text(
-                      "99 ⭐",
+                      '${users[2]['score']} ⭐',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0xffdddddd),
@@ -226,7 +250,7 @@ class _LeaderBoard extends State<LeaderBoard> {
                     ),
                     CircleAvatar(
                       radius: 35,
-                      backgroundImage: AssetImage("assets/images/c.png"),
+                      backgroundImage: NetworkImage(users[2]['avatar']),
                     ),
                   ],
                 ),
