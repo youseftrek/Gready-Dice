@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/models/api_service_model.dart';
 
+
 class LeaderBoard extends StatefulWidget {
-  const LeaderBoard({super.key});
+  const LeaderBoard({super.key,});
 
   @override
+
   State<LeaderBoard> createState() => _LeaderBoard();
 }
 
 class _LeaderBoard extends State<LeaderBoard> {
   List users = [];
-
-  //GET ALL USERS FORM THE API
-  void getUsers() async {
-    users = await APIServiceModel.getUsersListDescending();
-    print(users);
-  }
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -23,10 +20,17 @@ class _LeaderBoard extends State<LeaderBoard> {
     getUsers();
   }
 
-  void handleTap(int index){
+  // GET ALL USERS FORM THE API
+  Future<void> getUsers() async {
+    List fetchedUsers = await APIServiceModel.getUsersListDescending();
+    setState(() {
+      users = fetchedUsers;
+      isLoading = false;
+    });
+  }
+  void handleTap(int index) {
     print(users[index]);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +56,7 @@ class _LeaderBoard extends State<LeaderBoard> {
         ),
       ),
       backgroundColor: Color(0xff222831),
-      body: Stack(
+      body: isLoading? Center(child: CircularProgressIndicator()): Stack(
         children: [
           Stack(
             children: [
@@ -85,7 +89,7 @@ class _LeaderBoard extends State<LeaderBoard> {
                   itemBuilder: (context, index) {
                     final items = users;
                     return GestureDetector(
-                      onTap: () => handleTap(index)),
+                      onTap: () => handleTap(index),
                       child: Padding(
                         padding: EdgeInsets.only(right: 15, left: 15, top: 15),
                         child: Container(
