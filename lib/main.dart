@@ -11,8 +11,6 @@ void main() {
 class GreedyDice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    dynamic users = APIServiceModel.getUsersList();
-    print(users);
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Rubik'),
       debugShowCheckedModeBanner: false,
