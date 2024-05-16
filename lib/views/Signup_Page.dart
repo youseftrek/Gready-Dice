@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/models/api_service_model.dart';
@@ -26,11 +28,13 @@ class _SignupPageState extends State<SignupPage> {
     bool validPassword = Utils.confirmPassword(
         passwordController.text, confirmPasswordController.text);
     if (validPassword && validEmail) {
+      Random random = Random();
+      int randomNumber = random.nextInt(50) + 1;
       User user = User(
           email: emailController.text,
           name: nameController.text,
           score: 0,
-          avatarUrl: "https://i.pravatar.cc/500?img=15",
+          avatar: "https://i.pravatar.cc/500?img=$randomNumber",
           password: passwordController.text);
       APIServiceModel.createNewUser(user);
       Navigator.pushReplacement(

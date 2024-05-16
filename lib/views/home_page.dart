@@ -1,10 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:greedy_dice_project/views/game_rules.dart';
+import '../models/user_model.dart';
 import '../widgets/home_button.dart';
 import '../widgets/home_drawer.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final User user;
+  const HomePage({super.key, required this.user});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -13,20 +16,19 @@ class HomePage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Color(0xff222831),
+      backgroundColor: const Color(0xff222831),
       appBar: AppBar(
-        backgroundColor: Color(0xff00ADB5),
-        iconTheme: IconThemeData(
+        backgroundColor: const Color(0xff00ADB5),
+        iconTheme: const IconThemeData(
           color: Color(0xffEEEEEE),
           size: 35,
         ),
         elevation: 0,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.person_2))],
       ),
       drawer: HomeDrawer(
-        name: "Abdelrahman gamgom",
-        imageUrl: "https://i.pravatar.cc/500?img=6",
-        score: "200",
+        name: user.name,
+        imageUrl: user.avatar,
+        score: user.score.toString(),
         onTap: () {},
       ),
       body: Column(
@@ -39,12 +41,12 @@ class HomePage extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   style: TextStyle(
-                    color: Color(0xffEEEEEE),
+                    color: const Color(0xffEEEEEE),
                     fontSize: screenWidth * 0.13,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'assets/fonts/Caveat-Regular.ttf',
                   ),
-                  children: [
+                  children: const [
                     TextSpan(text: 'GR'),
                     TextSpan(
                       text: 'EE',
@@ -83,7 +85,12 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(top: screenHeight * 0.05),
             child: HomeButton(
               text: "Game Rules",
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GameRules()),
+                );
+              },
             ),
           ),
         ],

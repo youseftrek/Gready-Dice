@@ -5,6 +5,8 @@ import 'package:greedy_dice_project/views/home_page.dart';
 import 'package:greedy_dice_project/widgets/Signup_Textfield.dart';
 import 'package:greedy_dice_project/widgets/Signup_button.dart';
 
+import '../models/user_model.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -19,11 +21,12 @@ class _LoginScreenState extends State<LoginScreen>
   final passwordController = TextEditingController();
 
   void login() async {
-    bool login = await APIServiceModel.verifyLogin(emailController.text, passwordController.text);
-    if (login){
+    User? user = await APIServiceModel.verifyLogin(emailController.text, passwordController.text);
+    if (user != null){
+      print(user.avatar);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage(user : user)),
       );
     }
     else {

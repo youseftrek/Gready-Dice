@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'package:dio/dio.dart';
 import 'user_model.dart';
-import 'dart:async';
 
 class APIServiceModel {
   static final Dio _dio = Dio(BaseOptions(
@@ -14,7 +13,8 @@ class APIServiceModel {
       'email': user.email,
       'name': user.name,
       'score': user.score,
-      'avatarUrl': user.avatarUrl,
+      'avatar': user.avatar,
+      'password':user.password,
     };
   }
 
@@ -24,8 +24,9 @@ class APIServiceModel {
         email: json['email'] ?? '', // Provide a default value if email is null
         name: json['name'] ?? '', // Provide a default value if name is null
         score: json['score'] ?? 0, // Provide a default value if score is null
-        avatarUrl: json['avatar'] ?? '', // Provide a default value if avatarUrl is null
+        avatar: json['avatar'] ?? '', // Provide a default value if avatarUrl is null
         id: json['id'] ?? '',
+        password: json['password']?? '',
     );
   }
 
@@ -67,18 +68,20 @@ class APIServiceModel {
   }
 
   // Get Method to Verify user Login
-  static Future<bool> verifyLogin(String email, String password) async {
+  static Future<User?> verifyLogin(String email, String password) async {
     final Response response;
     try {
          response = await _dio.get('/users',
             queryParameters: {'email': email, 'password': password});
       } on Exception catch (e) {
-          return false;
+          return null;
       }
+      Map<String,dynamic> json = response.data[0];
       if (response.statusCode == 200) {
-       return true;
+        User user = JsonToUser(json);
+       return user;
       } else {
-        return false;
+        return null;
       }
   }
   // GET Method to Return all users by score descending

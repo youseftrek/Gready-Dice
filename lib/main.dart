@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/models/api_service_model.dart';
+import 'package:greedy_dice_project/views/Signup_Page.dart';
 import 'package:greedy_dice_project/views/home_page.dart';
 import 'package:greedy_dice_project/views/login_screen.dart';
 import 'package:greedy_dice_project/views/splash_screen.dart';
