@@ -4,7 +4,6 @@ import 'package:greedy_dice_project/views/home_page.dart';
 import 'package:greedy_dice_project/views/login_screen.dart';
 import 'package:greedy_dice_project/views/splash_screen.dart';
 
-
 void main() {
   runApp(GreedyDice());
 }
@@ -15,11 +14,10 @@ class GreedyDice extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Rubik'),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
-      // routes: {
-      //   '/': (context) => SplashScreen(),
-      //   '/login': (context) => LoginScreen()
-      // },
+      routes: {
+      '/': (context) => SplashScreen(),
+      '/login': (context) => LoginScreen()
+      },
     );
   }
 }
