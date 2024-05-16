@@ -2,11 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/views/leader_board.dart';
 
-import '../models/api_service_model.dart';
 import 'home_button.dart';
 
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({super.key, required this.name, required this.imageUrl, required this.score, required this.onTap});
+  const HomeDrawer(
+      {super.key,
+      required this.name,
+      required this.imageUrl,
+      required this.score,
+      required this.onTap});
   final String name;
   final String imageUrl;
   final String score;
@@ -27,7 +31,10 @@ class HomeDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(top: 25),
             child: Text(
               name,
-              style: TextStyle(color: Color(0xffEEEEEE), fontSize: 35, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Color(0xffEEEEEE),
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
@@ -47,13 +54,15 @@ class HomeDrawer extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 80),
-            child: HomeButton(text: "Score Board", onTap: () async {
-              List users = await APIServiceModel.getUsersListDescending();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LeaderBoard()),
-              );
-            }),
+            child: HomeButton(
+                text: "Score Board",
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LeaderBoard()),
+                  );
+                }),
           ),
           Spacer(flex: 1),
           ListTile(
@@ -64,7 +73,10 @@ class HomeDrawer extends StatelessWidget {
             ),
             title: Text(
               "Logout",
-              style: TextStyle(color: Color(0xffcc2e2e), fontSize: 30, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Color(0xffcc2e2e),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
             ),
             onTap: onTap,
           )

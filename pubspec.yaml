@@ -56,6 +56,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/images/dice/
     - assets/animations/dice_animation.json
     - assets/icons/
 
