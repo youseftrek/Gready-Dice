@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:greedy_dice_project/models/api_service_model.dart';
 import 'package:greedy_dice_project/models/components/rounded_icon_button.dart';
 import 'package:greedy_dice_project/models/game_model.dart';
 import 'package:greedy_dice_project/models/components/roll_button.dart';
+import 'package:greedy_dice_project/views/home_page.dart';
 
 class ControlModel {
   late final RoundedIconButton _home;
@@ -15,25 +17,33 @@ class ControlModel {
     _intiRestart();
     _intiRollButton();
   }
-
   // update temp switch turn
 
   void _onTapHold() {
     _gameModel.holdScore();
     if (_gameModel.isWinner()) {
-      print('winner');
+      _winner();
     } else {
       _gameModel.startTurn();
+      _hold.unActive();
     }
   }
 
-  void _winner() {}
+  void _winner() {
+    if (_gameModel.getPlayersScore().isTurn()) {
+      int score = _gameModel.player1.score + 10;
+      String id = _gameModel.player1.id;
+      APIServiceModel.updateUserScore(userId: id, score: score);
+    } else {
+      int score = _gameModel.player2.score + 10;
+      String id = _gameModel.player2.id;
+      APIServiceModel.updateUserScore(userId: id, score: score);
+    }
+  }
 
   void _onTapRollButton() {
     _pause();
-
     _gameModel.playAnimation();
-
     Future.delayed(const Duration(seconds: 1), () {
       _gameModel.rollDice();
 
@@ -46,12 +56,15 @@ class ControlModel {
   }
 
   void _onTapHome() {
-    print('home');
+  _home.openScreen(HomePage(user: _gameModel.player1,));
   }
 
   void _endTurn() {
-    _pause();
-    _restart.active();
+    Future.delayed(const Duration(seconds: 1), () {
+      _gameModel.startTurn();
+      _rollButton.active();
+      _restart.unActive();
+    });
   }
 
   void _pause() {
@@ -65,9 +78,6 @@ class ControlModel {
   }
 
   void _onTapRestart() {
-    _gameModel.startTurn();
-    _rollButton.active();
-    _restart.unActive();
   }
 
   //Getter Methods

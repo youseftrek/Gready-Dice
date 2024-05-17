@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/models/api_service_model.dart';
+import 'package:greedy_dice_project/views/game_view/game_view.dart';
 import 'package:greedy_dice_project/widgets/utils.dart';
 import '../models/user_model.dart';
 
-void showPasswordDialog(BuildContext context, var user,User loggedUser) {
+void showPasswordDialog(BuildContext context, var user, User loggedUser) {
   final passwordController = TextEditingController();
   showDialog(
     context: context,
@@ -39,16 +40,21 @@ void showPasswordDialog(BuildContext context, var user,User loggedUser) {
             onPressed: () {
               bool verifyPassword = Utils.confirmPassword(
                   passwordController.text, user['password']);
-              if (verifyPassword){
+              if (verifyPassword) {
+                print(verifyPassword);
                 User userObj = APIServiceModel.JsonToUser(user);
+                Navigator.of(context).pop();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const GameView()),
+                  MaterialPageRoute(
+                      builder: (context) => GameView(
+                            player1: loggedUser,
+                            player2: userObj,
+                          )),
                 );
               }
               // You can validate the password here
-              print('Entered Password: $password');
-              Navigator.of(context).pop();
+
             },
             child: const Text(
               'Submit',

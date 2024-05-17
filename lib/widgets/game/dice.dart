@@ -29,7 +29,7 @@ class Dice extends StatefulWidget with roll {
 class _DiceState extends State<Dice> with roll {
   late ImageProvider image;
   final ImageProvider defaultImage =
-      const AssetImage('assets/images/dice/start.png');
+      const AssetImage('assets/images/start.png');
   @override
   void initState() {
     // TODO: implement initState

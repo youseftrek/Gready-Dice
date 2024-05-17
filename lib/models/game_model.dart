@@ -1,17 +1,22 @@
 import 'package:greedy_dice_project/models/dice_model.dart';
+import 'package:greedy_dice_project/models/user_model.dart';
 import 'package:greedy_dice_project/widgets/game/dice.dart';
 import 'package:greedy_dice_project/widgets/game/players_score.dart';
 import 'package:greedy_dice_project/widgets/game/temp_score.dart';
 
 class GameModel {
-  final String _nameOne = 'Joo';
-  final String _nameTwo = 'Ahmed';
+  final User player1;
+  final User player2;
   final DiceModel _diceModel = DiceModel();
   final TempScore _tempScore = TempScore();
   final Dice _dice = Dice();
   final PlayersScore _playersScore = PlayersScore();
   bool _isWinner = false;
   bool _isOne = false;
+  
+  GameModel({
+    required this.player1,required this.player2,
+});
 
   void playAnimation() =>
       _dice.playAnimation(animation: _diceModel.getAnimation());
@@ -30,7 +35,7 @@ class GameModel {
     int points = _tempScore.holdScore();
     // this method update score and return current score
     int currentScore = _playersScore.updateScore(points: points);
-    _isWinner = (currentScore >= 120);
+    _isWinner = (currentScore >= 20);
   }
 
   bool isWinner() => _isWinner;
@@ -46,8 +51,8 @@ class GameModel {
   }
 
   bool isOne() => _isOne;
-  String getNameOne() => _nameOne;
-  String getNameTwo() => _nameTwo;
+  String getNameOne() => player1.name;
+  String getNameTwo() => player2.name;
   DiceModel getDiceModel() => _diceModel;
   TempScore getTempScore() => _tempScore;
   Dice getDice() => _dice;

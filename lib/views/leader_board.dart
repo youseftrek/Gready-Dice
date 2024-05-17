@@ -6,7 +6,7 @@ import '../models/user_model.dart';
 
 class LeaderBoard extends StatefulWidget {
   final User LoggedInuser;
-  const LeaderBoard({super.key,required this.user});
+  const LeaderBoard({super.key,required this.LoggedInuser});
 
   @override
 
@@ -33,7 +33,7 @@ class _LeaderBoard extends State<LeaderBoard> {
   }
   void handleTap(int index) {
     var user = users[index];
-    showPasswordDialog(context,user,LoggedInuser);
+    showPasswordDialog(context,user,widget.LoggedInuser);
   }
   @override
   Widget build(BuildContext context) {
