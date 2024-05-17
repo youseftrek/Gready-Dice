@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class DiceModel {
   final List<ImageProvider> images = const [
-    AssetImage('assets/images/dice/animation.gif'),
-    AssetImage('assets/images/dice/1.png'),
-    AssetImage('assets/images/dice/2.png'),
-    AssetImage('assets/images/dice/3.png'),
-    AssetImage('assets/images/dice/4.png'),
-    AssetImage('assets/images/dice/5.png'),
-    AssetImage('assets/images/dice/6.png'),
+    AssetImage('assets/images/animation.gif'),
+    AssetImage('assets/images/1.png'),
+    AssetImage('assets/images/2.png'),
+    AssetImage('assets/images/3.png'),
+    AssetImage('assets/images/4.png'),
+    AssetImage('assets/images/5.png'),
+    AssetImage('assets/images/6.png'),
   ];
   ImageProvider getAnimation() {
     return images[0];

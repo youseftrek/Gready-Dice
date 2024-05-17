@@ -2,15 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/views/leader_board.dart';
 
+import '../models/user_model.dart';
 import 'home_button.dart';
 
 class HomeDrawer extends StatelessWidget {
+  final User LoggedInuser;
   const HomeDrawer(
       {super.key,
       required this.name,
       required this.imageUrl,
       required this.score,
-      required this.onTap});
+      required this.onTap, required this.LoggedInuser});
   final String name;
   final String imageUrl;
   final String score;
@@ -31,15 +33,15 @@ class HomeDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(top: 25),
             child: Text(
               name,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Color(0xffEEEEEE),
                   fontSize: 35,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
+          const Padding(
+            padding: EdgeInsets.only(top: 20),
             child: Text(
               'Current Score',
               style: TextStyle(color: Color(0xff00ADB5), fontSize: 30),
@@ -49,18 +51,18 @@ class HomeDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5),
             child: Text(
               score,
-              style: TextStyle(color: Color(0xffEEEEEE), fontSize: 35),
+              style: const TextStyle(color: Color(0xffEEEEEE), fontSize: 35),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 80),
             child: HomeButton(
                 text: "Score Board",
-                onTap: () async {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LeaderBoard()),
+                        builder: (context) => LeaderBoard(LoggedInuser: LoggedInuser,)),
                   );
                 }),
           ),
@@ -71,7 +73,7 @@ class HomeDrawer extends StatelessWidget {
               color: Color(0xffcc2e2e),
               size: 30,
             ),
-            title: Text(
+            title: const Text(
               "Logout",
               style: TextStyle(
                   color: Color(0xffcc2e2e),

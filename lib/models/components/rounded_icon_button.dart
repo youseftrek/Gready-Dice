@@ -29,6 +29,11 @@ class RoundedIconButton extends StatefulWidget
   @override
   unActive() => __roundedIconButtonState.unActive();
   bool isActive() => _activation;
+
+  @override
+  openScreen(Widget screen) {
+    __roundedIconButtonState.openScreen(screen);
+  }
 }
 
 class _RoundedIconButtonState extends State<RoundedIconButton>
@@ -45,6 +50,7 @@ class _RoundedIconButtonState extends State<RoundedIconButton>
       unActive();
     }
   }
+
 
   @override
   void active() {
@@ -86,9 +92,20 @@ class _RoundedIconButtonState extends State<RoundedIconButton>
   }
 
   bool isActive() => widget._activation;
+
+  @override
+  openScreen(Widget screen) {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+        builder: (context) => screen),
+    );
+  }
 }
 
 mixin ActivationRoundedIconButton {
   active();
   unActive();
+  openScreen(Widget screen);
 }
+

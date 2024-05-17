@@ -14,6 +14,10 @@ class PlayersScore extends StatefulWidget with UpdateState {
 
   @override
   void startTurn() => _playersScoreState.startTurn();
+
+  bool isTurn() {
+    return _playersScoreState._isMyTurn;
+  }
 }
 
 class _PlayersScoreState extends State<PlayersScore> with UpdateState {

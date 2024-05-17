@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/views/game_rules.dart';
+import 'package:greedy_dice_project/views/leader_board.dart';
 import '../models/user_model.dart';
 import '../widgets/home_button.dart';
 import '../widgets/home_drawer.dart';
@@ -7,7 +8,6 @@ import '../widgets/home_drawer.dart';
 class HomePage extends StatelessWidget {
   final User user;
   const HomePage({super.key, required this.user});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class HomePage extends StatelessWidget {
         imageUrl: user.avatar,
         score: user.score.toString(),
         onTap: () {},
+        LoggedInuser: user,
       ),
       body: Column(
         children: [
@@ -78,7 +79,13 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(top: screenHeight * 0.1),
             child: HomeButton(
               text: "PLAY",
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LeaderBoard(LoggedInuser: user)),
+                );
+              },
             ),
           ),
           Padding(
@@ -86,7 +93,7 @@ class HomePage extends StatelessWidget {
             child: HomeButton(
               text: "Game Rules",
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const GameRules()),
                 );

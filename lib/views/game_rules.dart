@@ -7,7 +7,22 @@ class GameRules extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: const Color.fromRGBO(35, 44, 70, 1),
-        appBar: buildAppBar(),
+         appBar: AppBar(
+           backgroundColor: const Color.fromRGBO(35, 44, 70, 1),
+             iconTheme :const IconThemeData(color: Colors.white,size: 40),
+           // leading: IconButton(
+           //   icon: const Icon(
+           //     Icons.arrow_back_rounded,
+           //     color: Colors.white,
+           //     size: 40,
+           //   ),
+           //   onPressed: () {
+           //     Navigator.pop(
+           //       context,
+           //     );
+           //   },
+           // ),
+         ) ,
         body: Container(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -170,7 +185,7 @@ class GameRules extends StatelessWidget {
         )));
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromRGBO(35, 44, 70, 1),
       leading: IconButton(
@@ -179,7 +194,8 @@ class GameRules extends StatelessWidget {
           color: Colors.white,
           size: 40,
         ),
-        onPressed: () {},
+        onPressed: () {
+        },
       ),
     );
   }

@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen>
       print(user.avatar);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(user : user)),
+        MaterialPageRoute(builder: (context) => HomePage(user: user)),
       );
     }
     else {
