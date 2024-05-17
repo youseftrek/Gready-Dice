@@ -1,3 +1,4 @@
+import 'package:greedy_dice_project/models/api_service_model.dart';
 import 'package:greedy_dice_project/models/dice_model.dart';
 import 'package:greedy_dice_project/models/user_model.dart';
 import 'package:greedy_dice_project/widgets/game/dice.dart';
@@ -13,10 +14,11 @@ class GameModel {
   final PlayersScore _playersScore = PlayersScore();
   bool _isWinner = false;
   bool _isOne = false;
-  
+
   GameModel({
-    required this.player1,required this.player2,
-});
+    required this.player1,
+    required this.player2,
+  });
 
   void playAnimation() =>
       _dice.playAnimation(animation: _diceModel.getAnimation());
@@ -30,6 +32,11 @@ class GameModel {
     _playersScore.startTurn();
   }
 
+  void restart() {
+    _playersScore.restart();
+    _tempScore.holdScore();
+  }
+
 // this method use with  hold button
   void holdScore() {
     int points = _tempScore.holdScore();
@@ -39,6 +46,23 @@ class GameModel {
   }
 
   bool isWinner() => _isWinner;
+  void playerWinner() {
+    int score;
+    String id;
+
+    if (getPlayersScore().isTurn()) {
+      player1.score += 10;
+      score = player1.score;
+      id = player1.id;
+    } else {
+      player2.score += 10;
+      score = player2.score;
+      id = player2.id;
+    }
+    APIServiceModel.updateUserScore(userId: id, score: score);
+    _playersScore.win();
+    _dice.playAnimation(animation: _diceModel.getWinnerAnimation());
+  }
 
   void _updateTempScore() {
     int result = _diceModel.getNum();

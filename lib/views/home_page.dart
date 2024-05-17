@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/views/game_rules.dart';
 import 'package:greedy_dice_project/views/leader_board.dart';
+import 'package:greedy_dice_project/views/login_screen.dart';
 import '../models/user_model.dart';
 import '../widgets/home_button.dart';
 import '../widgets/home_drawer.dart';
@@ -29,7 +30,10 @@ class HomePage extends StatelessWidget {
         name: user.name,
         imageUrl: user.avatar,
         score: user.score.toString(),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()));
+        },
         LoggedInuser: user,
       ),
       body: Column(

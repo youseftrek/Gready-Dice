@@ -14,19 +14,20 @@ class APIServiceModel {
       'name': user.name,
       'score': user.score,
       'avatar': user.avatar,
-      'password':user.password,
+      'password': user.password,
     };
   }
 
   // Convert fromJSON to User Model
   static User JsonToUser(Map<String, dynamic> json) {
     return User(
-        email: json['email'] ?? '', // Provide a default value if email is null
-        name: json['name'] ?? '', // Provide a default value if name is null
-        score: json['score'] ?? 0, // Provide a default value if score is null
-        avatar: json['avatar'] ?? '', // Provide a default value if avatarUrl is null
-        id: json['id'] ?? '',
-        password: json['password']?? '',
+      email: json['email'] ?? '', // Provide a default value if email is null
+      name: json['name'] ?? '', // Provide a default value if name is null
+      score: json['score'] ?? 0, // Provide a default value if score is null
+      avatar:
+          json['avatar'] ?? '', // Provide a default value if avatarUrl is null
+      id: json['id'] ?? '',
+      password: json['password'] ?? '',
     );
   }
 
@@ -45,20 +46,19 @@ class APIServiceModel {
     try {
       final response = await _dio.get('/users/$userId');
       return response.data;
-
     } catch (error) {
       // Handle error
       rethrow;
     }
   }
+
   // POST Method Create new User
   static Future<User?> createNewUser(User user) async {
     try {
       final response = await _dio.post('/users', data: UserToJson(user));
-      if (response.statusCode == 201){
+      if (response.statusCode == 201) {
         return user;
-      }
-      else {
+      } else {
         return null;
       }
     } catch (error) {
@@ -71,19 +71,20 @@ class APIServiceModel {
   static Future<User?> verifyLogin(String email, String password) async {
     final Response response;
     try {
-         response = await _dio.get('/users',
-            queryParameters: {'email': email, 'password': password});
-      } on Exception catch (e) {
-          return null;
-      }
-      Map<String,dynamic> json = response.data[0];
-      if (response.statusCode == 200) {
-        User user = JsonToUser(json);
-       return user;
-      } else {
-        return null;
-      }
+      response = await _dio.get('/users',
+          queryParameters: {'email': email, 'password': password});
+    } on Exception {
+      return null;
+    }
+    Map<String, dynamic> json = response.data[0];
+    if (response.statusCode == 200) {
+      User user = JsonToUser(json);
+      return user;
+    } else {
+      return null;
+    }
   }
+
   // GET Method to Return all users by score descending
   static Future<List> getUsersListDescending() async {
     try {
@@ -99,15 +100,18 @@ class APIServiceModel {
       rethrow;
     }
   }
+
   // PUT Method to update score
-  static void updateUserScore({required String userId ,required int score}) async {
+  static void updateUserScore(
+      {required String userId, required int score}) async {
     try {
-     await _dio.put('/users/$userId',data: {'score': score});
+      await _dio.put('/users/$userId', data: {'score': score});
     } catch (error) {
       // Handle error
       rethrow;
     }
   }
+
   // GET Method to get Player Status
   static Future<bool> getUserStatus(int userId) async {
     try {
@@ -120,9 +124,9 @@ class APIServiceModel {
   }
 
   // PUT Method to change Player Status
-  static void putUserStatus(int userId,bool status) async {
+  static void putUserStatus(int userId, bool status) async {
     try {
-      await _dio.put('/users/$userId',data : {'inGame': status});
+      await _dio.put('/users/$userId', data: {'inGame': status});
     } catch (error) {
       // Handle error
       rethrow;
