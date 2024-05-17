@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:greedy_dice_project/models/api_service_model.dart';
 import 'package:greedy_dice_project/models/components/rounded_icon_button.dart';
 import 'package:greedy_dice_project/models/game_model.dart';
 import 'package:greedy_dice_project/models/components/roll_button.dart';
@@ -29,18 +28,6 @@ class ControlModel {
     }
   }
 
-  void _winner() {
-    if (_gameModel.getPlayersScore().isTurn()) {
-      int score = _gameModel.player1.score + 10;
-      String id = _gameModel.player1.id;
-      APIServiceModel.updateUserScore(userId: id, score: score);
-    } else {
-      int score = _gameModel.player2.score + 10;
-      String id = _gameModel.player2.id;
-      APIServiceModel.updateUserScore(userId: id, score: score);
-    }
-  }
-
   void _onTapRollButton() {
     _pause();
     _gameModel.playAnimation();
@@ -56,14 +43,22 @@ class ControlModel {
   }
 
   void _onTapHome() {
-  _home.openScreen(HomePage(user: _gameModel.player1,));
+    _home.openScreen(HomePage(
+      user: _gameModel.player1,
+    ));
+  }
+
+  void _onTapRestart() {
+    _gameModel.startTurn();
+    _gameModel.restart();
+    _hold.unActive();
+    _rollButton.active();
   }
 
   void _endTurn() {
     Future.delayed(const Duration(seconds: 1), () {
       _gameModel.startTurn();
       _rollButton.active();
-      _restart.unActive();
     });
   }
 
@@ -77,7 +72,9 @@ class ControlModel {
     _rollButton.active();
   }
 
-  void _onTapRestart() {
+  void _winner() {
+    _gameModel.playerWinner();
+    _pause();
   }
 
   //Getter Methods
@@ -109,18 +106,21 @@ class ControlModel {
       ),
       activeColor: Colors.white,
       unActiveColor: const Color(0xff00ABB3),
+      activation: true,
     );
   }
 
   void _intiRestart() {
     _restart = RoundedIconButton(
       onTap: _onTapRestart,
-      activation: false,
+      activation: true,
       icon: const Icon(
         Icons.repeat_rounded,
         size: 38,
         color: Color(0xff393E46),
       ),
+      activeColor: Colors.white,
+      unActiveColor: const Color(0xff00ABB3),
     );
   }
 

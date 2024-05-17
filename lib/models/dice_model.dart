@@ -11,9 +11,14 @@ class DiceModel {
     AssetImage('assets/images/4.png'),
     AssetImage('assets/images/5.png'),
     AssetImage('assets/images/6.png'),
+    AssetImage('assets/images/winner.gif'),
   ];
   ImageProvider getAnimation() {
     return images[0];
+  }
+
+  ImageProvider getWinnerAnimation() {
+    return images[7];
   }
 
   Random random = Random();

@@ -1,10 +1,11 @@
 class User {
   final String email;
   final String name;
-  final int score;
+
   final String avatar;
   final String id;
   final String password;
+  int score;
   User(
       {required this.email,
       required this.name,

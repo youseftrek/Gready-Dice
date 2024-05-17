@@ -18,12 +18,24 @@ class PlayersScore extends StatefulWidget with UpdateState {
   bool isTurn() {
     return _playersScoreState._isMyTurn;
   }
+
+  @override
+  void win() {
+    _playersScoreState.win();
+  }
+
+  @override
+  void restart() {
+    _playersScoreState.restart();
+  }
 }
 
 class _PlayersScoreState extends State<PlayersScore> with UpdateState {
   late int _scoreOne;
   late int _scoreTwo;
   late bool _isMyTurn;
+  late bool _isOneWinner;
+  late bool _isTwoWinner;
   late final Color _activeColor;
 
   late final Color _disactiveColor;
@@ -36,18 +48,29 @@ class _PlayersScoreState extends State<PlayersScore> with UpdateState {
     _scoreOne = 0;
     _scoreTwo = 0;
     _isMyTurn = true;
+    _isOneWinner = false;
+    _isTwoWinner = false;
   }
 
   @override
   Widget build(BuildContext context) {
     final Color playerOneColor = _isMyTurn ? _activeColor : _disactiveColor;
     final Color playerTwoColor = !_isMyTurn ? _activeColor : _disactiveColor;
+
     return Column(
       children: [
         Expanded(
-            child: ScoreTextBg(score: '$_scoreOne', color: playerOneColor)),
+            child: ScoreTextBg(
+          score: '$_scoreOne',
+          color: playerOneColor,
+          isWin: _isOneWinner,
+        )),
         Expanded(
-            child: ScoreTextBg(score: '$_scoreTwo', color: playerTwoColor)),
+            child: ScoreTextBg(
+          score: '$_scoreTwo',
+          color: playerTwoColor,
+          isWin: _isTwoWinner,
+        )),
       ],
     );
   }
@@ -73,9 +96,30 @@ class _PlayersScoreState extends State<PlayersScore> with UpdateState {
       _isMyTurn = !_isMyTurn;
     });
   }
+
+  @override
+  void win() {
+    setState(() {
+      _isOneWinner = _isMyTurn;
+      _isTwoWinner = !_isMyTurn;
+    });
+  }
+
+  @override
+  void restart() {
+    setState(() {
+      _scoreOne = 0;
+      _scoreTwo = 0;
+      _isMyTurn = true;
+      _isOneWinner = false;
+      _isTwoWinner = false;
+    });
+  }
 }
 
 mixin UpdateState {
   void startTurn();
   int updateScore({required int points});
+  void win();
+  void restart();
 }
