@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/models/api_service_model.dart';
+import 'package:greedy_dice_project/widgets/popup_password.dart';
 
+import '../models/user_model.dart';
 
 class LeaderBoard extends StatefulWidget {
-  const LeaderBoard({super.key,});
+  final User LoggedInuser;
+  const LeaderBoard({super.key,required this.user});
 
   @override
 
@@ -29,7 +32,8 @@ class _LeaderBoard extends State<LeaderBoard> {
     });
   }
   void handleTap(int index) {
-    print(users[index]);
+    var user = users[index];
+    showPasswordDialog(context,user,LoggedInuser);
   }
   @override
   Widget build(BuildContext context) {

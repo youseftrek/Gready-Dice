@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greedy_dice_project/models/api_service_model.dart';
 import 'package:greedy_dice_project/views/Signup_Page.dart';
 import 'package:greedy_dice_project/views/home_page.dart';
+import 'package:greedy_dice_project/views/leader_board.dart';
 import 'package:greedy_dice_project/views/login_screen.dart';
 import 'package:greedy_dice_project/views/splash_screen.dart';
 
@@ -15,10 +16,11 @@ class GreedyDice extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Rubik'),
       debugShowCheckedModeBanner: false,
-      routes: {
-      '/': (context) => SplashScreen(),
-      '/login': (context) => LoginScreen()
-      },
+      home: LeaderBoard(),
+      // routes: {
+      // '/': (context) => SplashScreen(),
+      // '/login': (context) => LoginScreen()
+      // },
     );
   }
 }
